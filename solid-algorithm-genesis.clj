@@ -34,7 +34,12 @@
 	(let [n (rand-plus-one)]
 		(repeatedly n lottery-single)))
 
+;will try a recursive implementation by re-binding initial-list to [distinct-list lottery-single] until duplicates are gone
 (defn lottery-test []
+	"remove duplicates by comparing the initial-list with the distinct-list
+	if (> initial-list distinct-list), then duplicates are present.
+	if (= initial-list distinct-list), then no duplicates.
+	if (< initial-list distinct-list), then nil."
 	(let [LV (lottery-various) dist-count (count (distinct LV))]
 		(if (= dist-count 2)
 			(do 
@@ -42,19 +47,3 @@
 				(conj 
 					(vec (lottery-single)) 
 					LV)))))
-
-(defn do-lotto []
-	(dotimes [n 16] (println (lottery-test))))
-
-
-
-;when [rand-plus-one = 2] & [duplicates = 2], then [games-listed = 1] 
-	;run (lottery-single) 1 time
-
-;when [rand-plus-one = 3] & [duplicates = 2], then [games-listed = 1] 
-	;run (lottery-single) 2 time
-
-;when [rand-plus-one = 3] & [duplicates = 3], then [games-listed = 1] 
-	;run (lottery-single) 2 time
-
-;if (!= [rand-plus-one = 2] [games-listed]), then (conj list output ())
