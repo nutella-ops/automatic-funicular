@@ -19,4 +19,13 @@
 (defn when-test [n]
       (when (pos? n) \t \f))
 
-(for [x (range 2)] (map when-test [x]))
+;; checking if recur can rebind var by just calling the var in recur form
+(defn recur-int [n]
+	(loop [rand-int (rand-int 7)]
+		(println rand-int)
+		(if-not (= n 0)
+			(recur (rand-int 7))	;; ClassCastException java.lang.Integer cannot be cast to clojure.lang.IFn  user/recur-int (recursion-study.clj:27), if (recur rand-int), just recurs initial value set by loop binding
+			(do
+				(dec n)
+				(println rand-int))))) 
+
