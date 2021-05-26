@@ -36,6 +36,12 @@
 
 
 (defn wtf []
-    (let [distinct-list (distinct (initial-list))
-          initial-list (initial-list)]
-    (cond (> (count initial-list) (count distinct-list)) (print "yeet "))))
+    (loop [int (rand-int 866)]
+        (do
+            (println int) 
+            (if (> int 432)
+                (recur (dec int))
+                int))))
+
+
+
