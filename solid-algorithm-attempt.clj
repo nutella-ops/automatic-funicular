@@ -35,13 +35,11 @@
         (list distinct-list make-selection)))))
 
 
+;; ClassCastException clojure.lang.LazySeq cannot be cast to java.lang.Number  clojure.lang.Numbers.gt (Numbers.java:227)
 (defn wtf []
-    (loop [int (rand-int 866)]
-        (do
-            (println int) 
-            (if (> int 432)
-                (recur (dec int))
-                int))))
-
-
-
+    (loop [list-a [(repeatedly 4 coin-toss)]]
+	(if
+	    (> list-a (distinct list-a)) ;; if duplicates present
+	    (recur (let [list-a [(distinct list-a) (repeatedly 4 coin-toss)]]))  ;; then, list-a = rebind list-a with new iteams list-b, list-b = create new list with distinct of list-a with new items
+	    list-a)))  ;; else
+	    
