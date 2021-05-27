@@ -19,13 +19,19 @@
 (defn when-test [n]
       (when (pos? n) \t \f))
 
-;; checking if recur can rebind var by just calling the var in recur form
-(defn recur-int [n]
-	(loop [rand-int (rand-int 7)]
-		(println rand-int)
-		(if-not (= n 0)
-			(recur (let [rand-int (rand-int 7)]))	;; ClassCastException java.lang.Integer cannot be cast to clojure.lang.IFn  user/recur-int (recursion-study.clj:27)
-			(do
-				(dec n)
-				(println rand-int))))) 
+(defn coin-toss []
+	(rand-int 2))
 
+(defn arbitrary-list []
+	(repeatedly 4 coin-toss))
+
+
+;; user=> (recur-int arbitrary-list arbitrary-list) 
+;; ClassCastException clojure.lang.LazySeq cannot be cast to java.lang.Number  clojure.lang.Numbers.gt (Numbers.java:227)
+(defn recur-int [initial-list distinct-list]
+	(let [initial-list arbitrary-list 
+	     distinct-list (distinct initial-list)]
+		(if
+	    	    (> initial-list distinct-list)   ;; test
+	               (recur initial-list distinct-list)	     ;; then
+			initial-list)))		     ;; else
