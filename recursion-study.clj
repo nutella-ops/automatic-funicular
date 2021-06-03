@@ -22,14 +22,15 @@
 (defn coin-toss []
 	(rand-int 2))
 
+;; list reduced to a binary pair because odds of init-list == (distinct init-list) were so low function hung indefinitely
 (defn arbitrary-list []
-	(repeatedly 4 coin-toss))
+	(repeatedly 2 coin-toss))
 
 
-;; trying to rebind initial an initial var, didn't put paren around arb-list to call its body
+;; rebind var using recur works now
 (defn recur-int [initial-list]
 	(let [initial-list (arbitrary-list)]
-			(println "begin:" initial-list)
+			(println "init-list:" initial-list)
 			(if
 				(= initial-list (distinct initial-list))	;; test
 					initial-list							;; then
