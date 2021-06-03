@@ -27,11 +27,12 @@
 	(repeatedly 2 coin-toss))
 
 
-;; rebind var using recur works now
-(defn recur-int [initial-list]
-	(let [initial-list (arbitrary-list)]
-			(println "init-list:" initial-list)
+;; recur needs a nominal function arg, yet matching number of args
+;; having trouble accumulating unique results, i.e. saving results then generate new list and add only unique results
+(defn recur-int [lol wtf]
+	(let [foo-list (arbitrary-list) bar-list (distinct foo-list)]
+			(println "init-list:" foo-list "\n" "dist-list:" bar-list)
 			(if
-				(= initial-list (distinct initial-list))	;; test
-					initial-list							;; then
-					(recur initial-list))))	    			;; else			     					
+				(> (count foo-list) (count bar-list))							;; if true, duplicates are present
+					bar-list													;; if duplicates present, print distinct list
+					(recur foo-list bar-list))))	    						;; else generate another list
