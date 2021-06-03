@@ -26,12 +26,11 @@
 	(repeatedly 4 coin-toss))
 
 
-;; user=> (recur-int arbitrary-list arbitrary-list) 
-;; ClassCastException clojure.lang.LazySeq cannot be cast to java.lang.Number  clojure.lang.Numbers.gt (Numbers.java:227)
-(defn recur-int [initial-list distinct-list]
-	(let [initial-list arbitrary-list 
-	     distinct-list (distinct initial-list)]
-		(if
-	    	    (> initial-list distinct-list)   ;; test
-	               (recur initial-list distinct-list)	     ;; then
-			initial-list)))		     ;; else
+;; trying to rebind initial an initial var, didn't put paren around arb-list to call its body
+(defn recur-int [initial-list]
+	(let [initial-list (arbitrary-list)]
+			(println "begin:" initial-list)
+			(if
+				(= initial-list (distinct initial-list))	;; test
+					initial-list							;; then
+					(recur initial-list))))	    			;; else			     					
